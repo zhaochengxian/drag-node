@@ -96,7 +96,7 @@ npm run dev or yarn dev
 
 ### 示范图片
 
-![image](https://github.com/zhaochengxian/drag-front-end/blob/955fff8f55a3e12fe757a165b887e827a63252ef/1.png)
+![image](https://github.com/zhaochengxian/drag-front-end/blob/ed4858aa74df9f4e7f9badb1535611126bea9b69/1.png)
 ### Drag and drop configuration to generate page front-end code
 
 [github](https://github.com/zhaochengxian/drag-front-end).
