@@ -10,7 +10,7 @@ mongoose
 ## Third party package
 
 ```
-nodemon--代码监控
+nodemon--代码监控维持服务
 
 ```
 
@@ -20,7 +20,7 @@ nodemon--代码监控
 npm run dev or yarn dev
 
 ```
-## the following is the api des
+## the following is the api des（restful）
 ### Api-get(查询页面列表)
 
 
