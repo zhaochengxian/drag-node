@@ -9,4 +9,8 @@ export const templateSchema = new Schema({
     pageConfig: String,
     paperwork: String,
     remark: String
+}, {
+    timestamps: {
+        createdAt: 'created', updatedAt: 'updated'
+    }
 })
