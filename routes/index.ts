@@ -9,13 +9,20 @@ import { templateSchema } from "../schemas/template"
 
 router.post("/upload", controller.upload);
 /* list */
-router.get('/page', function (req, res, next) {
-    const { status = "1", pageName = "" } = req.body
+router.post('/page-list', function (req, res, next) {
+    const { status, pageName } = req.body
     const templateModel = mongoose.model('template', templateSchema);
-    templateModel.find({ status, pageName }, (error, docs) => {
-        console.log(docs, "文档测试")
-        res.send(responds(error, docs));
-    })
+    if (!pageName && !status) {
+        templateModel.find({}, (error, data) => {
+            const total = Array.isArray(data) && data.length.toString()
+            res.send(responds(error, data, total));
+        })
+    } else {
+        templateModel.find({ ...req.body }, (error, data) => {
+            const total = Array.isArray(data) && data.length.toString()
+            res.send(responds(error, data, total));
+        })
+    }
 
 });
 
