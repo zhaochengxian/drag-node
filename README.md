@@ -1,4 +1,4 @@
-# drag-node(拖拽配置页面生成后端代码)
+# drag-node(拖拽配置页面生成--后端部分)
 
 ## Technology
 ```
@@ -94,7 +94,9 @@ npm run dev or yarn dev
 
 ```
 
+### 示范图片
 
+![image](https://github.com/zhaochengxian/drag-front-end/blob/ed4858aa74df9f4e7f9badb1535611126bea9b69/1.png)
 ### Drag and drop configuration to generate page front-end code
 
-[github]().
+[github](https://github.com/zhaochengxian/drag-front-end).
