@@ -1,17 +1,19 @@
 const express = require('express');
 const router = express.Router();
+const controller = require("../controller/upload");
 
 import { responds } from "../utils/respond"
 import { VerifyParams } from "../contants"
 import mongoose from "../utils/databaseConnect"
 import { templateSchema } from "../schemas/template"
 
-
+router.post("/upload", controller.upload);
 /* list */
 router.get('/page', function (req, res, next) {
-    const { status = "1" } = req.body
+    const { status = "1", pageName = "" } = req.body
     const templateModel = mongoose.model('template', templateSchema);
-    templateModel.find({ status }, (error, docs) => {
+    templateModel.find({ status, pageName }, (error, docs) => {
+        console.log(docs, "文档测试")
         res.send(responds(error, docs));
     })
 
