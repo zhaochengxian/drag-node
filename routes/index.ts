@@ -84,7 +84,7 @@ router.delete('/page', (req, res) => {
     }
     const templateModel = mongoose.model('template', templateSchema)
     templateModel.deleteOne({
-        id: { $gte: id }
+        _id: { $gte: id }
     }, (error, data) => {
         res.send(responds(error, data));
 
@@ -94,15 +94,13 @@ router.delete('/page', (req, res) => {
 
 /**close */
 
-router.put('/page', (req, res) => {
-    const { id, status } = req.body
+router.put('/close-page', (req, res) => {
+    const { id, status } = req.query
     if (!id) {
         res.send(responds(VerifyParams.get('id')));
     }
     const tempalteModel = mongoose.model('template', templateSchema)
-    tempalteModel.upadta({ id }, {
-        status
-    }, (error, data) => {
+    tempalteModel.updateOne({ _id: { $gte: id } }, { status }, { new: true }, (error, data) => {
         res.send(responds(error, data))
     })
 });
