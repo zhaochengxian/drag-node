@@ -1,19 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const controller = require("../controller/upload");
+import { upload } from "../controller"
+import dao from "../dao"
 
 import { responds } from "../utils/respond"
 import { VerifyParams, pageUrl } from "../contants"
 import mongoose from "../utils/databaseConnect"
 import { templateSchema } from "../schemas/template"
 
-router.post("/upload", controller.upload);
+router.post("/upload", upload);
 /* list */
 router.post('/page-list', function (req, res, next) {
-    const { status, pageName, pageSize, pageNum } = req.body
-    const templateModel = mongoose.model('template', templateSchema);
+    const { status, pageName } = req.body
     if (!pageName && !status) {
-        templateModel.find({}, (error, data) => {
+        dao.find({}, (error, data) => {
             const total = Array.isArray(data) && data.length.toString()
             data = data.map(item => {
                 item = Object.assign(item, { url: pageUrl })
@@ -22,7 +22,7 @@ router.post('/page-list', function (req, res, next) {
             res.send(responds(error, data, total));
         }).sort({ created: -1 })
     } else {
-        templateModel.find({ ...req.body }, (error, data) => {
+        dao.find({ ...req.body }, (error, data) => {
             const total = Array.isArray(data) && data.length.toString()
             data = data.map(item => {
                 return { ...item, url: pageUrl }
@@ -50,11 +50,11 @@ router.post('/page', (req, res) => {
         res.send(responds(VerifyParams.get('backgroundImage')));
     }
 
-    const templateModel = mongoose.model('template', templateSchema)
-    const templateModelObj = new templateModel({
+    const dao = mongoose.model('template', templateSchema)
+    const daoObj = new dao({
         ...req.body
     })
-    templateModelObj.save((error, data) => {
+    daoObj.save((error, data) => {
         res.send(responds(error, Object.assign(data, { url: pageUrl })));
     })
 
@@ -82,8 +82,7 @@ router.delete('/page', (req, res) => {
         res.send(responds(VerifyParams.get('id')))
         return
     }
-    const templateModel = mongoose.model('template', templateSchema)
-    templateModel.deleteOne({
+    dao.deleteOne({
         _id: { $gte: id }
     }, (error, data) => {
         res.send(responds(error, data));
@@ -99,8 +98,7 @@ router.put('/close-page', (req, res) => {
     if (!id) {
         res.send(responds(VerifyParams.get('id')));
     }
-    const tempalteModel = mongoose.model('template', templateSchema)
-    tempalteModel.updateOne({ _id: { $gte: id } }, { status }, { new: true }, (error, data) => {
+    dao.updateOne({ _id: { $gte: id } }, { status }, { new: true }, (error, data) => {
         res.send(responds(error, data))
     })
 });
