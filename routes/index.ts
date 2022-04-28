@@ -3,25 +3,32 @@ const router = express.Router();
 const controller = require("../controller/upload");
 
 import { responds } from "../utils/respond"
-import { VerifyParams } from "../contants"
+import { VerifyParams, pageUrl } from "../contants"
 import mongoose from "../utils/databaseConnect"
 import { templateSchema } from "../schemas/template"
 
 router.post("/upload", controller.upload);
 /* list */
 router.post('/page-list', function (req, res, next) {
-    const { status, pageName } = req.body
+    const { status, pageName, pageSize, pageNum } = req.body
     const templateModel = mongoose.model('template', templateSchema);
     if (!pageName && !status) {
         templateModel.find({}, (error, data) => {
             const total = Array.isArray(data) && data.length.toString()
+            data = data.map(item => {
+                item = Object.assign(item, { url: pageUrl })
+                return item
+            })
             res.send(responds(error, data, total));
-        })
+        }).sort({ created: -1 })
     } else {
         templateModel.find({ ...req.body }, (error, data) => {
             const total = Array.isArray(data) && data.length.toString()
-            res.send(responds(error, data, total));
-        })
+            data = data.map(item => {
+                return { ...item, url: pageUrl }
+            })
+            res.send(responds(error, Object.assign(data, { url: pageUrl }), total));
+        }).sort({ created: -1 })
     }
 
 });
@@ -48,7 +55,7 @@ router.post('/page', (req, res) => {
         ...req.body
     })
     templateModelObj.save((error, data) => {
-        res.send(responds(error, data));
+        res.send(responds(error, Object.assign(data, { url: pageUrl })));
     })
 
 });
@@ -63,7 +70,6 @@ router.put('/page', (req, res) => {
     tempalteModel.upadta({ id }, {
         ...req.body
     }, (error, data) => {
-
         res.send(responds(error, data))
     })
 });
@@ -71,13 +77,17 @@ router.put('/page', (req, res) => {
 /* delete */
 
 router.delete('/page', (req, res) => {
-    const { id } = req.body
+    const { id } = req.query
     if (!id) {
-        res.send(responds(VerifyParams.get('id')));
+        res.send(responds(VerifyParams.get('id')))
+        return
     }
     const templateModel = mongoose.model('template', templateSchema)
-    templateModel.remove({ id }, (error, data) => {
+    templateModel.deleteOne({
+        id: { $gte: id }
+    }, (error, data) => {
         res.send(responds(error, data));
+
     })
 
 });

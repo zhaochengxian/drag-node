@@ -5,8 +5,6 @@ export enum Code {
 }
 
 
-
-
 export const VerifyParams = new Map([
     ['pageName', '页面名称不能为空'],
     ['paperwork', '分享文案不能为空'],
@@ -15,3 +13,4 @@ export const VerifyParams = new Map([
     ['id', 'id没有传']
 ])
 
+export const pageUrl = "http://www.baidu.com"
