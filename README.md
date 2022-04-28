@@ -27,6 +27,9 @@ npm run dev or yarn dev
 | paramsName         | Type                                  | Default Value  | Description                          |
 | ------------------ | ------------------------------------- | -------------- | ------------------------------------ |
 | status             | string                                | 1              | 页面状态 1开启，0 关闭                        |
+| pageName           | string                                |                | 页面名称                      |
+| pageNum           | string                                |                | 页码                     |
+| pageSize          | string                                |                | 每页数据                   |
 
 ### Api-post(页面生成)
 
@@ -78,18 +81,32 @@ npm run dev or yarn dev
         shareImage: 'https://img2.baidu.com/it/u=2147843660,3054818539&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=313',
         paperwork: '分享文案',
         remark：'备注',
-        children: [
+        pageConfig:[
             {
-                id:'1',
-                modelType: '1',
-                price: '价格',
-                priceFont: '12',
-                priceColor: 'red',
-                url:'图片跳转地址',
-                image:'https://img2.baidu.com/it/u=2147843660,3054818539&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=312'
-                type:'活动类型' 
+                  id:'1',
+                  modelType: '1',
+                  price: '价格',
+                  priceFont: '12',
+                  priceColor: 'red',
+                  url:'图片跳转地址',
+                  image:'https://img2.baidu.com/it/u=2147843660,3054818539&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=312'
+                  type:'活动类型' 
+                 children?: [
+                     {
+                         id:'1.1',
+                         modelType: '1',
+                         price: '价格',
+                         priceFont: '12',
+                         priceColor: 'red',
+                         url:'图片跳转地址',
+                         image:'https://img2.baidu.com/it/u=2147843660,3054818539&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=312'
+                         type:'活动类型' 
+                     }
+                 ]
             }
+           
         ]
+        
     }
 
 ```
