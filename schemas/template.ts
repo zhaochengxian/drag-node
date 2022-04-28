@@ -8,7 +8,8 @@ export const templateSchema = new Schema({
     pageName: String,
     pageConfig: String,
     paperwork: String,
-    remark: String
+    remark: String,
+    url: String,
 }, {
     timestamps: {
         createdAt: 'created', updatedAt: 'updated'
