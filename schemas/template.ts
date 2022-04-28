@@ -6,7 +6,7 @@ export const templateSchema = new Schema({
     backgroundImage: String,
     shareImage: String,
     pageName: String,
-    pageMes: String,
+    pageConfig: String,
     paperwork: String,
     remark: String
 })
